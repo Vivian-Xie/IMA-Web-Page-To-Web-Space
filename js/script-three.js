@@ -79,3 +79,5 @@ window.addEventListener('mousedown', () => {
   
   // Clear the cardsArray
 });
+console.log("this is hahhahahahaha"); // Should ideally be the scene, not a controller or camera
+console.log(window.doorPivot.parent); // Should ideally be the scene, not a controller or camera

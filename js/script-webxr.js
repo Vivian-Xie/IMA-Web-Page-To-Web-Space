@@ -64,7 +64,7 @@ function onSelectEnd(event) {
     object.material.emissive.b = 0;
 
 
-    ////changed from group to scene
+    ////changed from gri
     scene.attach(object);
     controller.userData.selected = undefined;
   }

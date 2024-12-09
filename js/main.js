@@ -159,9 +159,9 @@ function setupThree() {
     `./assets/door_frame/scene.gltf`,
     function (gltf) {
       door_frame = gltf.scene;
-      door_frame.scale.set(0.08, 0.08, 0.08); // Scale the model
+      door_frame.scale.set(0.008, 0.008, 0.008); // Scale the model
       door_frame.rotation.y = Math.PI / 2; // Rotate the frame
-      door_frame.position.y = -15; // Rotate the frame
+      // door_frame.position.y = -15; // Rotate the frame
       scene.add(door_frame);
       
       const doorbox = new THREE.Box3().setFromObject(door_frame);
@@ -219,7 +219,7 @@ function setupThree() {
       const doorPivot = new THREE.Object3D();
   
 
-      doorPivot.position.set(center.x - size.x * 0.4, center.y-15, center.z);
+      doorPivot.position.set(center.x - size.x * 0.4, center, center.z);
       doorMesh.position.set(size.x * 0.4, 0, 0);
       doorPivot.add(doorMesh);
       
@@ -240,14 +240,14 @@ function setupThree() {
     `./assets/teapot/scene.gltf`,
     function (gltf) {
       teapot = gltf.scene;
-      teapot.scale.set(0.02, 0.02, 0.02);
+      teapot.scale.set(0.002, 0.002, 0.002);
       teapot.position.set(0, 0, 0);
       sceneElementsGroup.add(teapot);
   
       // Add more teapots
-      for (let i = 1; i <= 7; i++) {
+      for (let i = 1; i <= 10; i++) {
         const clone = teapot.clone();
-        clone.position.set(Math.random() * 3*WORLD_HALF - WORLD_HALF / 2, Math.random() * 40, Math.random() * 3*WORLD_HALF - WORLD_HALF / 2);
+        clone.position.set(Math.random() *WORLD_HALF - WORLD_HALF / 2, Math.random() * 10, Math.random()*WORLD_HALF - WORLD_HALF / 2);
         sceneElementsGroup.add(clone);
       }
     }
@@ -256,8 +256,8 @@ function setupThree() {
     `./assets/table/scene.gltf`, // Path to your table model
     function (gltf) {
       const table = gltf.scene; // Load the table model
-      table.scale.set(10, 10, 10); // Adjust scale to fit the scene
-      table.position.set(35, 40, 30); // Initial position
+      table.scale.set(1, 1, 1); // Adjust scale to fit the scene
+      table.position.set(8, 4, 5); // Initial position
       table.rotation.set(
         Math.random() * 0.2 - 0.1, // Random tilt around X (-0.1 to 0.1 radians)
         0, // Keep Y rotation fixed (optional)
@@ -269,9 +269,9 @@ function setupThree() {
       for (let i = 1; i <= 1; i++) {
         const clone = table.clone(); // Clone the original table
         clone.position.set(
-          -35,
+          -5,
           Math.random() * 10, // Keep Y position on the ground
-          Math.random() * 3 * WORLD_HALF - WORLD_HALF / 2 // Random Z position
+          Math.random() * WORLD_HALF - WORLD_HALF / 2 // Random Z position
         );
         clone.rotation.set(
           -Math.random()  + 0.1, // Random tilt around X (-0.1 to 0.1 radians)
@@ -440,7 +440,7 @@ let doorOpenSpeed = Math.PI / 100; // Speed of opening (adjust as needed)
       window.doorPivot.rotation.y = Math.sin(elapsedTime) * Math.PI / 25;
     }
 
-    window.doorPivot.position.y = 11; // Keep the door position consistent
+    window.doorPivot.position.y = 2.6; // Keep the door position consistent
   }
 
 
@@ -511,7 +511,7 @@ function getPlane() {
 
 function getFlash() {
   const distance = camera.near + 0.1; // Slightly in front of the camera
-  const height = 2 * Math.tan((camera.fov * Math.PI) / 360) * distance; // Screen height at near plane
+  const height = Math.tan((camera.fov * Math.PI) / 360) * distance; // Screen height at near plane
   const width = height * camera.aspect; // Screen width at near plane
 
   // Create the flash plane
