@@ -9,6 +9,7 @@ let clock = new THREE.Clock();
 let cubes = [];
 let vertices=[];
 let cardsArray = [];
+let teapot;
 let sceneElementsGroup;
 let floating_cards;
 let floating_cards2;
@@ -18,7 +19,7 @@ const WORLD_HALF = 25;
 const loader = new THREE.TextureLoader();
 const gltfLoader = new GLTFLoader();
 const starTexture = loader.load(
-  "@/assets/teapot2.jpg"
+  "./assets/teapot2.jpg"
   );
   
   starTexture.wrapS = THREE.RepeatWrapping; // 水平方向重复
@@ -155,11 +156,12 @@ function setupThree() {
 
   }
   const door = gltfLoader.load(
-    `@/assets/door_frame/scene.gltf`,
+    `./assets/door_frame/scene.gltf`,
     function (gltf) {
       door_frame = gltf.scene;
       door_frame.scale.set(0.08, 0.08, 0.08); // Scale the model
       door_frame.rotation.y = Math.PI / 2; // Rotate the frame
+      door_frame.position.y = -15; // Rotate the frame
       scene.add(door_frame);
       
       const doorbox = new THREE.Box3().setFromObject(door_frame);
@@ -185,11 +187,11 @@ function setupThree() {
       // sceneElementsGroup.add(glowMesh);
       // console.log('Door frame size:', size);
       // console.log('Door frame center:', center);
-      const doorTexture = loader.load('@/assets/door.jpg');
+      const doorTexture = loader.load('./assets/door.jpg');
       const doorGeometry = new THREE.BoxGeometry(size.x * 0.8, size.y*0.95, size.z * 0.1); // Slightly smaller than the frame
       // const doorMaterial = new THREE.MeshStandardMaterial({  map: doorTexture, }); // Brown door
-    const doorTextureFront = loader.load('@/assets/door.jpg');
-    const doorTextureBack = loader.load('@/assets/door.jpg'); // Separate texture for the back
+    const doorTextureFront = loader.load('./assets/door.jpg');
+    const doorTextureBack = loader.load('./assets/door.jpg'); // Separate texture for the back
 
     // Mirror the texture for the front face
     const doorMaterialFront = new THREE.MeshStandardMaterial({
@@ -217,7 +219,7 @@ function setupThree() {
       const doorPivot = new THREE.Object3D();
   
 
-      doorPivot.position.set(center.x - size.x * 0.4, center.y, center.z);
+      doorPivot.position.set(center.x - size.x * 0.4, center.y-15, center.z);
       doorMesh.position.set(size.x * 0.4, 0, 0);
       doorPivot.add(doorMesh);
       
@@ -234,8 +236,62 @@ function setupThree() {
     }
   );
   
+  const teapots = gltfLoader.load(
+    `./assets/teapot/scene.gltf`,
+    function (gltf) {
+      teapot = gltf.scene;
+      teapot.scale.set(0.02, 0.02, 0.02);
+      teapot.position.set(0, 0, 0);
+      sceneElementsGroup.add(teapot);
+  
+      // Add more teapots
+      for (let i = 1; i <= 7; i++) {
+        const clone = teapot.clone();
+        clone.position.set(Math.random() * 3*WORLD_HALF - WORLD_HALF / 2, Math.random() * 40, Math.random() * 3*WORLD_HALF - WORLD_HALF / 2);
+        sceneElementsGroup.add(clone);
+      }
+    }
+  );
+  const tables = gltfLoader.load(
+    `./assets/table/scene.gltf`, // Path to your table model
+    function (gltf) {
+      const table = gltf.scene; // Load the table model
+      table.scale.set(10, 10, 10); // Adjust scale to fit the scene
+      table.position.set(35, 40, 30); // Initial position
+      table.rotation.set(
+        Math.random() * 0.2 - 0.1, // Random tilt around X (-0.1 to 0.1 radians)
+        0, // Keep Y rotation fixed (optional)
+        -Math.random() * 2 + 0.1  // Random tilt around Z (-0.1 to 0.1 radians)
+      );
+      sceneElementsGroup.add(table); // Add the first table to the group
+  
+      // Add more tables randomly
+      for (let i = 1; i <= 1; i++) {
+        const clone = table.clone(); // Clone the original table
+        clone.position.set(
+          -35,
+          Math.random() * 10, // Keep Y position on the ground
+          Math.random() * 3 * WORLD_HALF - WORLD_HALF / 2 // Random Z position
+        );
+        clone.rotation.set(
+          -Math.random()  + 0.1, // Random tilt around X (-0.1 to 0.1 radians)
+          0, // Keep Y rotation fixed (optional)
+          Math.random() * 2 + 0.1  // Random tilt around Z (-0.1 to 0.1 radians)
+        );
+        sceneElementsGroup.add(clone); // Add the clone to the group
+      }
+    },
+    function (xhr) {
+      console.log((xhr.loaded / xhr.total) * 100 + '% loaded'); // Log loading progress
+    },
+    function (error) {
+      console.error(error); // Log any errors
+    }
+  );
+  
+  
   const cards = gltfLoader.load(
-    `@/assets/floating_cards/scene.gltf`,
+    `./assets/floating_cards/scene.gltf`,
     function (gltf) {
       floating_cards = gltf.scene;
       floating_cards.scale.set(0.08, 0.08, 0.08); // Scale child objects
@@ -260,7 +316,7 @@ function setupThree() {
     }
   );
   const cards2 = gltfLoader.load(
-    `@/assets/cards/scene.gltf`,
+    `./assets/cards/scene.gltf`,
     function (gltf) {
       // Create the first instance
       floating_cards2 = gltf.scene.clone();
@@ -358,6 +414,15 @@ function updateThree() {
     object.position.y += Math.sin(elapsedTime * floatingSpeed + index) * floatingRange * 0.01;
     
   });
+
+  sceneElementsGroup.children.forEach((teapot, index) => {
+    // if (teapot.name === "Teapot") { // Ensure only teapots are affected
+      const floatingSpeed = 0.9;
+      const floatingRange = 5;
+      teapot.position.y += Math.sin(clock.getElapsedTime() * floatingSpeed + index) * floatingRange * 0.01;
+    // }
+  });
+  
   //door
   let doorTargetAngle = 0; // Target angle for the door
 let doorOpenSpeed = Math.PI / 100; // Speed of opening (adjust as needed)
@@ -375,7 +440,7 @@ let doorOpenSpeed = Math.PI / 100; // Speed of opening (adjust as needed)
       window.doorPivot.rotation.y = Math.sin(elapsedTime) * Math.PI / 25;
     }
 
-    window.doorPivot.position.y = 26; // Keep the door position consistent
+    window.doorPivot.position.y = 11; // Keep the door position consistent
   }
 
 

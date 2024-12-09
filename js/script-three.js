@@ -58,6 +58,11 @@ window.addEventListener('mousedown', () => {
   flashTimer = 0; // Reset the timer
   if(doorFullyOpen1&&!doorFullyOpen2){
     doorFullyOpen2=true;
+    const newDoor = window.doorPivot.clone();
+    // Adjust the position of the new door if needed
+    newDoor.position.set(window.doorPivot.position.x, window.doorPivot.position.y, window.doorPivot.position.z-100);
+
+    scene.add(newDoor);
     scene.remove(sceneElementsGroup);
     cardsArray = [];
   } 
