@@ -1,0 +1,11 @@
+Model Information:
+* title:	Cards
+* source:	https://sketchfab.com/3d-models/cards-32537e3a299d4972ac6342b8794dc6f0
+* author:	Andrey Belkin (https://sketchfab.com/belkindesign)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Cards" (https://sketchfab.com/3d-models/cards-32537e3a299d4972ac6342b8794dc6f0) by Andrey Belkin (https://sketchfab.com/belkindesign) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
