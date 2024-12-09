@@ -161,7 +161,7 @@ function setupThree() {
       door_frame = gltf.scene;
       door_frame.scale.set(0.008, 0.008, 0.008); // Scale the model
       door_frame.rotation.y = Math.PI / 2; // Rotate the frame
-      // door_frame.position.y = -15; // Rotate the frame
+      door_frame.position.y = -2.8; // Rotate the frame
       scene.add(door_frame);
       
       const doorbox = new THREE.Box3().setFromObject(door_frame);
@@ -440,7 +440,7 @@ let doorOpenSpeed = Math.PI / 100; // Speed of opening (adjust as needed)
       window.doorPivot.rotation.y = Math.sin(elapsedTime) * Math.PI / 25;
     }
 
-    window.doorPivot.position.y = 2.6; // Keep the door position consistent
+    window.doorPivot.position.y =-0.2; // Keep the door position consistent
   }
 
 
