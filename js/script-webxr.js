@@ -45,6 +45,34 @@ function setupWebXR() {
 
 function onSelectStart(event) {
   const controller = event.target;
+
+  // Add your mousedown logic here
+  flashActive = true; // Activate the flash
+  flashOpacity = 0; // Start from transparent
+  flashTimer = 0; // Reset the timer
+
+  if (doorFullyOpen1 && !doorFullyOpen2) {
+    doorFullyOpen2 = true;
+
+    // Clone and add the new door
+    const newDoor = window.doorPivot.clone();
+    newDoor.position.set(window.doorPivot.position.x, window.doorPivot.position.y, window.doorPivot.position.z - 100);
+    scene.add(newDoor);
+
+    // Remove the scene elements group
+    scene.remove(sceneElementsGroup);
+    cardsArray = [];
+  } 
+  
+  if (!doorFullyOpen1) {
+    scene.add(sceneElementsGroup);
+    console.log("This is the first open");
+    doorFullyOpen1 = true;
+  }
+
+  console.log("All cards have been removed from the scene!");
+  
+  // Standard select start logic for XR
   const intersections = getIntersections(controller);
 
   if (intersections.length > 0) {
@@ -54,8 +82,10 @@ function onSelectStart(event) {
     controller.attach(object);
     controller.userData.selected = object;
   }
+
   controller.userData.targetRayMode = event.data.targetRayMode;
 }
+
 
 function onSelectEnd(event) {
   const controller = event.target;

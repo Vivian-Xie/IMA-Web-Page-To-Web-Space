@@ -269,7 +269,7 @@ function setupThree() {
       for (let i = 1; i <= 1; i++) {
         const clone = table.clone(); // Clone the original table
         clone.position.set(
-          -5,
+          -35,
           Math.random() * 10, // Keep Y position on the ground
           Math.random() * WORLD_HALF - WORLD_HALF / 2 // Random Z position
         );
