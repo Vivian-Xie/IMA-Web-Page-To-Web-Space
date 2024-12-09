@@ -18,7 +18,7 @@ const WORLD_HALF = 25;
 const loader = new THREE.TextureLoader();
 const gltfLoader = new GLTFLoader();
 const starTexture = loader.load(
-  "./assets/teapot2.jpg"
+  "@/assets/teapot2.jpg"
   );
   
   starTexture.wrapS = THREE.RepeatWrapping; // 水平方向重复
@@ -155,7 +155,7 @@ function setupThree() {
 
   }
   const door = gltfLoader.load(
-    `./assets/door_frame/scene.gltf`,
+    `@/assets/door_frame/scene.gltf`,
     function (gltf) {
       door_frame = gltf.scene;
       door_frame.scale.set(0.08, 0.08, 0.08); // Scale the model
@@ -185,11 +185,11 @@ function setupThree() {
       // sceneElementsGroup.add(glowMesh);
       // console.log('Door frame size:', size);
       // console.log('Door frame center:', center);
-      const doorTexture = loader.load('./assets/door.jpg');
+      const doorTexture = loader.load('@/assets/door.jpg');
       const doorGeometry = new THREE.BoxGeometry(size.x * 0.8, size.y*0.95, size.z * 0.1); // Slightly smaller than the frame
       // const doorMaterial = new THREE.MeshStandardMaterial({  map: doorTexture, }); // Brown door
-    const doorTextureFront = loader.load('./assets/door.jpg');
-    const doorTextureBack = loader.load('./assets/door.jpg'); // Separate texture for the back
+    const doorTextureFront = loader.load('@/assets/door.jpg');
+    const doorTextureBack = loader.load('@/assets/door.jpg'); // Separate texture for the back
 
     // Mirror the texture for the front face
     const doorMaterialFront = new THREE.MeshStandardMaterial({
@@ -235,7 +235,7 @@ function setupThree() {
   );
   
   const cards = gltfLoader.load(
-    `./assets/floating_cards/scene.gltf`,
+    `@/assets/floating_cards/scene.gltf`,
     function (gltf) {
       floating_cards = gltf.scene;
       floating_cards.scale.set(0.08, 0.08, 0.08); // Scale child objects
@@ -260,7 +260,7 @@ function setupThree() {
     }
   );
   const cards2 = gltfLoader.load(
-    `./assets/cards/scene.gltf`,
+    `@/assets/cards/scene.gltf`,
     function (gltf) {
       // Create the first instance
       floating_cards2 = gltf.scene.clone();
